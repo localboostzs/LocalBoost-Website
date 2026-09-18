@@ -1,0 +1,136 @@
+// LocalBoost Zentralschweiz — shared site behaviour
+
+document.addEventListener("DOMContentLoaded", () => {
+  initNav();
+  initReveal();
+  initFaq();
+  initForms();
+});
+
+/* Mobile navigation toggle */
+function initNav() {
+  const toggle = document.querySelector(".nav-toggle");
+  const links = document.querySelector(".nav-links");
+  if (!toggle || !links) return;
+
+  toggle.addEventListener("click", () => {
+    const isOpen = links.classList.toggle("is-open");
+    toggle.setAttribute("aria-expanded", String(isOpen));
+    document.body.style.overflow = isOpen ? "hidden" : "";
+  });
+
+  links.querySelectorAll("a").forEach((link) => {
+    link.addEventListener("click", () => {
+      links.classList.remove("is-open");
+      toggle.setAttribute("aria-expanded", "false");
+      document.body.style.overflow = "";
+    });
+  });
+}
+
+/* Fade-in / slide-up on scroll */
+function initReveal() {
+  const items = document.querySelectorAll(".reveal");
+  if (!items.length) return;
+
+  if (!("IntersectionObserver" in window)) {
+    items.forEach((el) => el.classList.add("is-visible"));
+    return;
+  }
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("is-visible");
+          observer.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.15, rootMargin: "0px 0px -40px 0px" }
+  );
+
+  items.forEach((el) => observer.observe(el));
+}
+
+/* FAQ accordion + tabs */
+function initFaq() {
+  const tabs = document.querySelectorAll(".faq-tab");
+  const panels = document.querySelectorAll(".faq-panel");
+
+  tabs.forEach((tab) => {
+    tab.addEventListener("click", () => {
+      tabs.forEach((t) => t.classList.remove("is-active"));
+      panels.forEach((p) => p.classList.remove("is-active"));
+      tab.classList.add("is-active");
+      const target = document.getElementById(tab.dataset.target);
+      if (target) target.classList.add("is-active");
+    });
+  });
+
+  document.querySelectorAll(".faq-question").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const item = btn.closest(".faq-item");
+      const answer = item.querySelector(".faq-answer");
+      const isOpen = item.classList.contains("is-open");
+
+      item.parentElement.querySelectorAll(".faq-item").forEach((other) => {
+        other.classList.remove("is-open");
+        other.querySelector(".faq-answer").style.maxHeight = null;
+        other.querySelector(".faq-question").setAttribute("aria-expanded", "false");
+      });
+
+      if (!isOpen) {
+        item.classList.add("is-open");
+        answer.style.maxHeight = answer.scrollHeight + "px";
+        btn.setAttribute("aria-expanded", "true");
+      }
+    });
+  });
+}
+
+/* Formspree AJAX handling: no redirect, inline success/error messaging */
+function initForms() {
+  document.querySelectorAll("form[data-ajax-form]").forEach((form) => {
+    // .form-success / .form-error are siblings of the form (inside .form-card),
+    // not descendants — look them up from the shared wrapper.
+    const wrapper = form.closest(".form-card") || form.parentElement;
+    const successEl = wrapper.querySelector(".form-success");
+    const errorEl = wrapper.querySelector(".form-error");
+    const submitBtn = form.querySelector('button[type="submit"]');
+    const submitLabel = submitBtn ? submitBtn.textContent : "";
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      if (successEl) successEl.style.display = "none";
+      if (errorEl) errorEl.style.display = "none";
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.textContent = "Wird gesendet …";
+      }
+
+      try {
+        const response = await fetch(form.action, {
+          method: "POST",
+          body: new FormData(form),
+          headers: { Accept: "application/json" },
+        });
+
+        if (response.ok) {
+          form.reset();
+          if (successEl) successEl.style.display = "block";
+          if (successEl) successEl.scrollIntoView({ behavior: "smooth", block: "center" });
+        } else {
+          if (errorEl) errorEl.style.display = "block";
+        }
+      } catch (err) {
+        if (errorEl) errorEl.style.display = "block";
+      } finally {
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.textContent = submitLabel;
+        }
+      }
+    });
+  });
+}
