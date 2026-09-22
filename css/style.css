@@ -269,6 +269,23 @@ input, select, textarea {
   background: var(--gradient-top-and-footer-fade);
 }
 
+/* Variante von .section--footer-fade, bei der die weisse Zone deutlich
+   länger bleibt, bevor der dunkle Verlauf einsetzt — für Sections mit
+   Begleittext neben der Card (z.B. Kontakt), damit der Text nicht auf
+   dem dunklen Bereich landet. */
+.section--footer-fade--late {
+  background: linear-gradient(
+    180deg,
+    var(--color-white) 0%,
+    var(--color-white) 68%,
+    var(--color-blue-pale) 78%,
+    var(--color-blue-light) 86%,
+    var(--color-blue) 91%,
+    var(--color-blue-dark) 96%,
+    var(--color-navy) 100%
+  );
+}
+
 .section--brand {
   background: var(--gradient-brand);
   color: var(--color-white);
@@ -1318,8 +1335,8 @@ input, select, textarea {
 }
 
 .teaser-icon img {
-  width: 54px;
-  height: 54px;
+  width: 72px;
+  height: 72px;
   object-fit: contain;
   margin-bottom: 0;
   border-radius: 0;
@@ -1998,22 +2015,10 @@ input, select, textarea {
   margin-bottom: 0.4rem;
 }
 
-/* Legal-Content auf dunklem Footer-Verlauf: helle Textfarben für Lesbarkeit */
-.section--footer-fade .legal-content h2,
-.section--footer-fade .legal-content p,
-.section--footer-fade .legal-content ul li,
-.section--footer-fade .legal-meta {
-  color: var(--color-white);
-}
-
-.section--footer-fade .legal-content p,
-.section--footer-fade .legal-content ul li {
-  opacity: 0.9;
-}
-
-.section--footer-fade .legal-content a {
-  color: var(--color-white);
-  text-decoration: underline;
+/* Leerer Verlauf-Spacer: nur für den nahtlosen Übergang in die Fusszeile,
+   ohne eigenen Inhalt und ohne die grosse Section-Standardhöhe. */
+.section--footer-fade--spacer {
+  padding-block: var(--space-5);
 }
 
 .legal-content ul li::before {
