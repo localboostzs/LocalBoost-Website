@@ -780,7 +780,9 @@ input, select, textarea {
 }
 
 .hero-media img {
+  width: 100%;
   max-width: 560px;
+  height: auto;
   margin-inline: auto;
 }
 
