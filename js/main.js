@@ -5,6 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initReveal();
   initFaq();
   initForms();
+  initCompareSlider();
 });
 
 /* Mobile navigation toggle */
@@ -87,6 +88,21 @@ function initFaq() {
       }
     });
   });
+}
+
+/* Vorher/Nachher-Vergleichsregler (Google-Unternehmensprofil) */
+function initCompareSlider() {
+  const frame = document.getElementById("compareFrame");
+  const range = document.getElementById("compareRange");
+  if (!frame || !range) return;
+
+  const setPos = (value) => {
+    frame.style.setProperty("--pos", value + "%");
+  };
+
+  setPos(range.value);
+
+  range.addEventListener("input", () => setPos(range.value));
 }
 
 /* Formspree AJAX handling: no redirect, inline success/error messaging */

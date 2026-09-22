@@ -70,6 +70,99 @@
     </div>
   </section>
 
+  <!-- Vorher/Nachher-Simulator -->
+  <section class="section compare-section">
+    <div class="container">
+      <div class="section-head section-head--center reveal">
+        <h2>Sehen Sie den Unterschied.</h2>
+        <p>Vergleichen Sie einen unvollständigen Google-Auftritt mit einem professionell optimierten Unternehmensprofil.</p>
+      </div>
+
+      <div class="compare reveal">
+        <div class="compare__frame" id="compareFrame">
+          <div class="compare__layer compare__layer--after" id="mockAfter">
+            <div class="gprofile">
+              <div class="gprofile__cover gprofile__cover--after">
+                <span class="gprofile__cover-tile"></span>
+                <span class="gprofile__cover-tile"></span>
+                <span class="gprofile__cover-tile"></span>
+                <span class="gprofile__cover-tile gprofile__cover-tile--optional"></span>
+              </div>
+              <div class="gprofile__body">
+                <div class="gprofile__header">
+                  <div class="gprofile__avatar gprofile__avatar--after">MB</div>
+                  <div class="gprofile__id">
+                    <div class="gprofile__name">Muster Bäckerei</div>
+                    <div class="gprofile__location">Luzern · Bäckerei</div>
+                    <div class="gprofile__rating">
+                      <span class="gprofile__stars gprofile__stars--after">★★★★★</span>
+                      <span class="gprofile__rating-num">4.8</span>
+                      <span class="gprofile__rating-count">(128 Bewertungen)</span>
+                    </div>
+                  </div>
+                </div>
+                <ul class="gprofile__facts">
+                  <li class="gprofile__fact gprofile__fact--ok">Öffnungszeiten: Mo–Sa, 06:00–18:30 Uhr</li>
+                  <li class="gprofile__fact gprofile__fact--ok">Telefon: 041 000 00 00</li>
+                  <li class="gprofile__fact gprofile__fact--ok">Website: musterbaeckerei-beispiel.ch</li>
+                  <li class="gprofile__fact gprofile__fact--ok gprofile__fact--optional">Adresse: Musterstrasse 1, 6000 Luzern</li>
+                </ul>
+                <p class="gprofile__desc">Familiengeführte Bäckerei mit täglich frischem Sauerteigbrot, hausgemachten Patisserien und persönlicher Beratung – seit drei Generationen in Luzern.</p>
+                <p class="gprofile__review gprofile__review--optional">„Sehr freundlich und immer frisch!“ – aktuelle Bewertung</p>
+              </div>
+            </div>
+          </div>
+          <div class="compare__layer compare__layer--before" id="compareBefore">
+            <div class="gprofile">
+              <div class="gprofile__cover gprofile__cover--before">
+                <span class="gprofile__cover-tile"></span>
+              </div>
+              <div class="gprofile__body">
+                <div class="gprofile__header">
+                  <div class="gprofile__avatar gprofile__avatar--before">MB</div>
+                  <div class="gprofile__id">
+                    <div class="gprofile__name">Muster Bäckerei</div>
+                    <div class="gprofile__location">Luzern</div>
+                    <div class="gprofile__rating">
+                      <span class="gprofile__stars gprofile__stars--before">★★★★☆</span>
+                      <span class="gprofile__rating-num">3.7</span>
+                      <span class="gprofile__rating-count">(12 Bewertungen)</span>
+                    </div>
+                  </div>
+                </div>
+                <ul class="gprofile__facts">
+                  <li class="gprofile__fact gprofile__fact--muted">Öffnungszeiten: teilweise angegeben</li>
+                  <li class="gprofile__fact gprofile__fact--muted">Telefon: nicht hinterlegt</li>
+                  <li class="gprofile__fact gprofile__fact--muted">Website: nicht verknüpft</li>
+                  <li class="gprofile__fact gprofile__fact--muted gprofile__fact--optional">Adresse: nicht bestätigt</li>
+                </ul>
+                <p class="gprofile__desc gprofile__desc--muted">Bäckerei in Luzern.</p>
+                <p class="gprofile__review gprofile__review--optional gprofile__review--muted">Zuletzt aktualisiert vor längerer Zeit</p>
+              </div>
+            </div>
+          </div>
+          <div class="compare__divider" id="compareDivider" aria-hidden="true">
+            <span class="compare__handle">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 6-6 6 6 6"/></svg>
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg>
+            </span>
+          </div>
+          <span class="compare__tag compare__tag--before" aria-hidden="true">Vorher</span>
+          <span class="compare__tag compare__tag--after" aria-hidden="true">Optimiert</span>
+          <input type="range" id="compareRange" class="compare__range" min="0" max="100" value="50" step="1" aria-label="Vergleichsregler: links zeigt den bisherigen, rechts den optimierten Google-Unternehmenseintrag" />
+        </div>
+      </div>
+      <p class="compare__hint reveal">Regler nach links oder rechts ziehen</p>
+      <p class="compare__disclaimer reveal">Beispielhafte Darstellung zu Illustrationszwecken – keine Garantie für bestimmte Bewertungen, Platzierungen oder Resultate.</p>
+
+      <div class="compare-cta reveal">
+        <h3>Wie wirkt Ihr Unternehmen aktuell auf Google?</h3>
+        <p>Wir analysieren Ihren bestehenden Online-Auftritt und zeigen Ihnen konkrete Optimierungsmöglichkeiten.</p>
+        <a href="/googlecheck/" class="btn btn-primary">Kostenlose Analyse anfordern</a>
+      </div>
+    </div>
+  </section>
+
   <!-- Pakete-Teaser -->
   <section class="section section--wave-down">
     <div class="container">
@@ -177,7 +270,7 @@
   </section>
 
   <!-- FAQ teaser -->
-  <section class="section section--wave-down">
+  <section class="section section--footer-fade">
     <div class="container">
       <div class="section-head section-head--center reveal">
         <h2>Haben Sie Fragen? Wir sind für Sie da.</h2>
