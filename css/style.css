@@ -2132,9 +2132,16 @@ input, select, textarea {
   -webkit-appearance: none;
   appearance: none;
   z-index: 5;
+  /* Das Dragging übernimmt komplett das Frame per Pointer Events (siehe
+     main.js) — der native Thumb wäre bei 100% Breite/Höhe nicht
+     zuverlässig ziehbar und würde mit unserer eigenen Positionierung
+     kollidieren. Das Range-Element bleibt nur für Tastatur/Screenreader
+     erreichbar (Fokus per JS, Pfeiltasten funktionieren unabhängig von
+     pointer-events). */
+  pointer-events: none;
 }
 
-.compare__range:focus-visible ~ .compare__divider .compare__handle {
+.compare__frame:has(.compare__range:focus-visible) .compare__handle {
   outline: 3px solid var(--color-blue);
   outline-offset: 3px;
 }

@@ -105,11 +105,15 @@ function initCompareSlider() {
   // Halten die Position bei Tastatur-/Screenreader-Änderungen synchron.
   range.addEventListener("input", () => setPos(range.value));
 
-  // Eigene Pointer-Logik statt uns auf den nativen Thumb-Drag zu
-  // verlassen: der native Range-Thumb lässt sich nicht zuverlässig von
-  // jeder Stelle aus ziehen, sobald er per CSS auf 100% Breite/Höhe
-  // gestreckt wird. Mit Pointer Capture funktioniert das Ziehen von
-  // überall im Frame aus, durchgehend und über Maus, Stift und Touch.
+  // Eigene Pointer-Logik auf dem FRAME (nicht auf dem Range-Element
+  // selbst): der native Range-Thumb ist bei 100% Breite/Höhe nicht
+  // zuverlässig ziehbar und seine eigene interne Drag-Berechnung
+  // kollidiert mit unserer, sobald er die Pointer-Events tatsächlich
+  // empfängt. Das Range-Element ist daher pointer-events:none (siehe
+  // CSS) und dient nur noch Tastatur/Screenreader. Das Ziehen mit
+  // Maus/Stift/Touch läuft komplett über das Frame, das die Pointer-
+  // Events zuverlässig selbst erhält und per Pointer Capture auch dann
+  // weiter folgt, wenn der Zeiger das Frame verlässt.
   const valueFromPointer = (clientX) => {
     const rect = frame.getBoundingClientRect();
     const ratio = (clientX - rect.left) / rect.width;
@@ -124,18 +128,15 @@ function initCompareSlider() {
 
   let dragging = false;
 
-  // preventDefault() stops the browser's own native thumb-drag maths
-  // (unreliable once the thumb is stretched to 100% via appearance:none)
-  // from fighting our calculation and overwriting it on release.
-  range.addEventListener("pointerdown", (e) => {
+  frame.addEventListener("pointerdown", (e) => {
     dragging = true;
-    range.setPointerCapture(e.pointerId);
+    frame.setPointerCapture(e.pointerId);
     applyValue(valueFromPointer(e.clientX));
     e.preventDefault();
     range.focus();
   });
 
-  range.addEventListener("pointermove", (e) => {
+  frame.addEventListener("pointermove", (e) => {
     if (!dragging) return;
     applyValue(valueFromPointer(e.clientX));
     e.preventDefault();
@@ -144,13 +145,13 @@ function initCompareSlider() {
   const stopDragging = (e) => {
     if (!dragging) return;
     dragging = false;
-    if (range.hasPointerCapture(e.pointerId)) {
-      range.releasePointerCapture(e.pointerId);
+    if (frame.hasPointerCapture(e.pointerId)) {
+      frame.releasePointerCapture(e.pointerId);
     }
   };
 
-  range.addEventListener("pointerup", stopDragging);
-  range.addEventListener("pointercancel", stopDragging);
+  frame.addEventListener("pointerup", stopDragging);
+  frame.addEventListener("pointercancel", stopDragging);
 }
 
 /* Formspree AJAX handling: no redirect, inline success/error messaging */
