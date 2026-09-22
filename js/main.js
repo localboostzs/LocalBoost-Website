@@ -102,7 +102,55 @@ function initCompareSlider() {
 
   setPos(range.value);
 
+  // Halten die Position bei Tastatur-/Screenreader-Änderungen synchron.
   range.addEventListener("input", () => setPos(range.value));
+
+  // Eigene Pointer-Logik statt uns auf den nativen Thumb-Drag zu
+  // verlassen: der native Range-Thumb lässt sich nicht zuverlässig von
+  // jeder Stelle aus ziehen, sobald er per CSS auf 100% Breite/Höhe
+  // gestreckt wird. Mit Pointer Capture funktioniert das Ziehen von
+  // überall im Frame aus, durchgehend und über Maus, Stift und Touch.
+  const valueFromPointer = (clientX) => {
+    const rect = frame.getBoundingClientRect();
+    const ratio = (clientX - rect.left) / rect.width;
+    return Math.min(100, Math.max(0, Math.round(ratio * 100)));
+  };
+
+  const applyValue = (value) => {
+    if (String(value) === range.value) return;
+    range.value = String(value);
+    setPos(value);
+  };
+
+  let dragging = false;
+
+  // preventDefault() stops the browser's own native thumb-drag maths
+  // (unreliable once the thumb is stretched to 100% via appearance:none)
+  // from fighting our calculation and overwriting it on release.
+  range.addEventListener("pointerdown", (e) => {
+    dragging = true;
+    range.setPointerCapture(e.pointerId);
+    applyValue(valueFromPointer(e.clientX));
+    e.preventDefault();
+    range.focus();
+  });
+
+  range.addEventListener("pointermove", (e) => {
+    if (!dragging) return;
+    applyValue(valueFromPointer(e.clientX));
+    e.preventDefault();
+  });
+
+  const stopDragging = (e) => {
+    if (!dragging) return;
+    dragging = false;
+    if (range.hasPointerCapture(e.pointerId)) {
+      range.releasePointerCapture(e.pointerId);
+    }
+  };
+
+  range.addEventListener("pointerup", stopDragging);
+  range.addEventListener("pointercancel", stopDragging);
 }
 
 /* Formspree AJAX handling: no redirect, inline success/error messaging */
