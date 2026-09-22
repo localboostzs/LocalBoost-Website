@@ -821,6 +821,14 @@ input, select, textarea {
   font-weight: 800;
   color: var(--color-text);
   letter-spacing: -0.02em;
+  overflow-wrap: break-word;
+  hyphens: auto;
+}
+
+@media (max-width: 420px) {
+  .page-hero h1 {
+    font-size: 1.7rem;
+  }
 }
 
 .page-hero .subline {
@@ -1131,6 +1139,15 @@ input, select, textarea {
     grid-template-columns: 1fr;
     display: flex;
     flex-direction: column;
+    padding-block: var(--space-4);
+  }
+
+  /* Der äussere .section-Wrapper trägt auf Mobile zusätzlich zum
+     .detail-section-Padding bei -> Abstand zwischen den einzelnen
+     Leistungs-Einträgen wird spürbar zu gross. Nur für Sections mit
+     einer .detail-section reduzieren, andere Seiten bleiben unberührt. */
+  .section:has(.detail-section) {
+    padding-block: var(--space-3);
   }
 }
 
@@ -1576,6 +1593,7 @@ input, select, textarea {
   border-radius: var(--radius-lg);
   padding: var(--space-5);
   box-shadow: var(--shadow-md);
+  width: 100%;
   max-width: 720px;
   margin-inline: auto;
 }
