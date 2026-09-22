@@ -286,6 +286,22 @@ input, select, textarea {
   );
 }
 
+/* Noch später einsetzender Verlauf: für kurze Sections, die nur aus
+   Titel/Text + einer Button-Reihe bestehen (kein Formular/Card) — der
+   dunkle Verlauf soll erst etwa auf Höhe der Buttons beginnen. */
+.section--footer-fade--buttons {
+  background: linear-gradient(
+    180deg,
+    var(--color-white) 0%,
+    var(--color-white) 78%,
+    var(--color-blue-pale) 86%,
+    var(--color-blue-light) 91%,
+    var(--color-blue) 95%,
+    var(--color-blue-dark) 98%,
+    var(--color-navy) 100%
+  );
+}
+
 .section--brand {
   background: var(--gradient-brand);
   color: var(--color-white);
