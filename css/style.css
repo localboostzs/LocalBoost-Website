@@ -1156,32 +1156,76 @@ input, select, textarea {
    ========================================================================== */
 
 .timeline {
+  position: relative;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: var(--space-3);
   counter-reset: phase;
 }
 
+.timeline::before {
+  content: "";
+  position: absolute;
+  top: 64px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--color-blue-pale);
+  z-index: 0;
+}
+
 .timeline-item {
+  position: relative;
+  z-index: 1;
   background: var(--color-white);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
   padding: var(--space-4);
-  position: relative;
 }
 
 .timeline-number {
+  position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 46px;
-  height: 46px;
+  width: 64px;
+  height: 64px;
   border-radius: 50%;
   background: var(--gradient-brand);
   color: var(--color-white);
-  font-weight: 800;
-  font-size: 1.1rem;
   margin-bottom: var(--space-3);
+}
+
+.timeline-icon {
+  width: 28px;
+  height: 28px;
+  opacity: 0;
+  transform: scale(0.4) rotate(-10deg);
+  transition: opacity 0.45s var(--ease), transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transition-delay: 0.15s;
+}
+
+.timeline-icon.is-visible {
+  opacity: 1;
+  transform: scale(1) rotate(0deg);
+}
+
+.timeline-number__digit {
+  position: absolute;
+  bottom: -6px;
+  right: -6px;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--color-white);
+  color: var(--color-blue);
+  font-family: var(--font-ui);
+  font-weight: 800;
+  font-size: 0.7rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-sm);
 }
 
 .timeline-item h3 {
@@ -1205,6 +1249,10 @@ input, select, textarea {
 @media (max-width: 600px) {
   .timeline {
     grid-template-columns: 1fr;
+  }
+
+  .timeline::before {
+    display: none;
   }
 }
 
