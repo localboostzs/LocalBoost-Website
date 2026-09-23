@@ -1029,6 +1029,17 @@ input, select, textarea {
   margin-block: 0.4rem var(--space-3);
 }
 
+.pricing-price:has(+ .pricing-price-sub) {
+  margin-bottom: 0.15rem;
+}
+
+.pricing-price-sub {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-3);
+}
+
 .pricing-price span {
   font-size: 0.95rem;
   font-weight: 600;
@@ -1105,6 +1116,11 @@ input, select, textarea {
   display: block;
   font-size: 1.15rem;
   letter-spacing: 0.04em;
+}
+
+.detail-content-centered p {
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-4);
 }
 
 .detail-content-centered .pricing-features {
@@ -1198,6 +1214,20 @@ input, select, textarea {
 /* ==========================================================================
    Bedarfs-Quiz
    ========================================================================== */
+
+/* Kompakterer Seitenkopf + Quiz-Intro auf der Pakete-Seite: die
+   generischen .page-hero/.section-head-Abstände sind hier zu gross. */
+.page-hero--white:has(+ .pkg-quiz-section) {
+  padding-bottom: var(--space-3);
+}
+
+.pkg-quiz-section {
+  padding-top: var(--space-3);
+}
+
+.pkg-quiz-section .section-head {
+  margin-bottom: var(--space-3);
+}
 
 .quiz-card {
   max-width: 560px;
