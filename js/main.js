@@ -7,6 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initForms();
   initCompareSlider();
   initVisibilityCalculator();
+  initPackageQuiz();
 });
 
 /* Mobile navigation toggle */
@@ -207,6 +208,112 @@ function initVisibilityCalculator() {
     result.classList.add("is-animated");
     result.scrollIntoView({ behavior: "smooth", block: "nearest" });
   });
+}
+
+/* Bedarfs-Quiz (Pakete-Seite) */
+function initPackageQuiz() {
+  const card = document.querySelector(".quiz-card");
+  if (!card) return;
+
+  const steps = card.querySelectorAll("[data-quiz-step]");
+  const dots = card.querySelectorAll("[data-quiz-dot]");
+  const options = card.querySelectorAll(".quiz-option");
+  const restartBtn = document.getElementById("quizRestart");
+  const resultTitle = document.getElementById("quizResultTitle");
+  const resultPrice = document.getElementById("quizResultPrice");
+  const resultReason = document.getElementById("quizResultReason");
+
+  const answers = { website: null, reviews: null, goal: null };
+
+  const PACKAGES = {
+    google: { title: "Google Boost", price: "Ab CHF 490" },
+    web: { title: "Web Boost", price: "Auf Anfrage" },
+    full: { title: "Full Boost", price: "Auf Anfrage" },
+  };
+
+  function recommendPackage(website, reviews, goal) {
+    if (website === "nein") {
+      return goal === "vertrauen" ? "web" : "full";
+    }
+    if (reviews !== "ja") return "google";
+    return goal === "anfragen" ? "full" : "google";
+  }
+
+  function buildReason(pkgKey, website, reviews, goal) {
+    const goalPhrase =
+      {
+        sichtbarkeit: "mehr Sichtbarkeit bei Google",
+        anfragen: "mehr Anfragen",
+        vertrauen: "mehr Vertrauen bei neuen Kunden",
+      }[goal] || "mehr Sichtbarkeit";
+
+    if (pkgKey === "web") {
+      return `Du hast noch keine Website und möchtest ${goalPhrase} erreichen. Web Boost gibt dir eine professionelle Website und ein optimiertes Google-Profil als solide Basis.`;
+    }
+    if (pkgKey === "full") {
+      if (website === "nein") {
+        return `Du hast noch keine Website und möchtest ${goalPhrase} erreichen. Full Boost deckt Website, Google-Profil, Bewertungen und Social Media in einem ab.`;
+      }
+      return `Du hast bereits eine Website und Bewertungen – um daraus ${goalPhrase} zu machen, lohnt sich zusätzlich der Aufbau von Social Media und Automatisierung aus dem Full-Boost-Paket.`;
+    }
+    // google
+    if (reviews !== "ja") {
+      return `Du hast bereits eine Website, aber noch wenige oder keine Google-Bewertungen. Google Boost holt hier das schnellste Potenzial für ${goalPhrase} heraus.`;
+    }
+    return `Du bist bei Website und Bewertungen schon gut aufgestellt. Google Boost optimiert dein Profil gezielt weiter für ${goalPhrase}.`;
+  }
+
+  function showStep(stepKey) {
+    steps.forEach((step) => {
+      step.classList.toggle("is-active", step.dataset.quizStep === stepKey);
+    });
+    dots.forEach((dot) => {
+      const dotStep = dot.dataset.quizDot;
+      dot.classList.toggle("is-active", dotStep === stepKey);
+      dot.classList.toggle("is-done", stepKey === "result" || Number(dotStep) < Number(stepKey));
+    });
+  }
+
+  function showResult() {
+    const pkgKey = recommendPackage(answers.website, answers.reviews, answers.goal);
+    const pkg = PACKAGES[pkgKey];
+    resultTitle.textContent = pkg.title;
+    resultPrice.textContent = pkg.price;
+    resultReason.textContent = buildReason(pkgKey, answers.website, answers.reviews, answers.goal);
+    showStep("result");
+  }
+
+  options.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const key = btn.dataset.quizAnswer;
+      const value = btn.dataset.quizValue;
+      answers[key] = value;
+
+      btn
+        .closest(".quiz-step")
+        .querySelectorAll(".quiz-option")
+        .forEach((b) => b.classList.remove("is-selected"));
+      btn.classList.add("is-selected");
+
+      if (key === "website") {
+        setTimeout(() => showStep("2"), 200);
+      } else if (key === "reviews") {
+        setTimeout(() => showStep("3"), 200);
+      } else if (key === "goal") {
+        setTimeout(showResult, 200);
+      }
+    });
+  });
+
+  if (restartBtn) {
+    restartBtn.addEventListener("click", () => {
+      answers.website = null;
+      answers.reviews = null;
+      answers.goal = null;
+      options.forEach((b) => b.classList.remove("is-selected"));
+      showStep("1");
+    });
+  }
 }
 
 /* Dezente Konfetti-Animation bei erfolgreichem Formular-Versand */

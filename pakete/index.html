@@ -48,6 +48,65 @@
     </div>
   </section>
 
+  <!-- Bedarfs-Quiz -->
+  <section class="section pkg-quiz-section">
+    <div class="container">
+      <div class="section-head section-head--center reveal">
+        <h2>Welches Paket passt zu dir?</h2>
+        <p>Beantworte 3 kurze Fragen und erhalte eine passende Empfehlung.</p>
+      </div>
+
+      <div class="quiz-card reveal">
+        <div class="quiz-progress" aria-hidden="true">
+          <span class="quiz-progress__dot is-active" data-quiz-dot="1"></span>
+          <span class="quiz-progress__dot" data-quiz-dot="2"></span>
+          <span class="quiz-progress__dot" data-quiz-dot="3"></span>
+        </div>
+
+        <div class="quiz-steps">
+          <div class="quiz-step is-active" data-quiz-step="1">
+            <h3>Hast du bereits eine Website?</h3>
+            <div class="quiz-options">
+              <button type="button" class="quiz-option" data-quiz-answer="website" data-quiz-value="ja">Ja</button>
+              <button type="button" class="quiz-option" data-quiz-answer="website" data-quiz-value="nein">Nein</button>
+            </div>
+          </div>
+
+          <div class="quiz-step" data-quiz-step="2">
+            <h3>Hast du bereits Google-Bewertungen?</h3>
+            <div class="quiz-options">
+              <button type="button" class="quiz-option" data-quiz-answer="reviews" data-quiz-value="ja">Ja</button>
+              <button type="button" class="quiz-option" data-quiz-answer="reviews" data-quiz-value="nein">Nein</button>
+              <button type="button" class="quiz-option" data-quiz-answer="reviews" data-quiz-value="weiss-nicht">Weiss nicht</button>
+            </div>
+          </div>
+
+          <div class="quiz-step" data-quiz-step="3">
+            <h3>Was ist dein Hauptziel?</h3>
+            <div class="quiz-options quiz-options--column">
+              <button type="button" class="quiz-option" data-quiz-answer="goal" data-quiz-value="sichtbarkeit">Mehr Sichtbarkeit</button>
+              <button type="button" class="quiz-option" data-quiz-answer="goal" data-quiz-value="anfragen">Mehr Anfragen</button>
+              <button type="button" class="quiz-option" data-quiz-answer="goal" data-quiz-value="vertrauen">Mehr Vertrauen bei Kunden</button>
+            </div>
+          </div>
+
+          <div class="quiz-step" data-quiz-step="result">
+            <div class="quiz-result">
+              <span class="eyebrow">Unsere Empfehlung für dich</span>
+              <h3 id="quizResultTitle"></h3>
+              <div class="pricing-price" id="quizResultPrice"></div>
+              <p id="quizResultReason"></p>
+              <div class="btn-row" style="justify-content:center">
+                <a href="/anfrage/" class="btn btn-primary" id="quizResultCta">Kostenlose Anfrage</a>
+                <button type="button" class="btn-ghost" id="quizRestart">Quiz neu starten</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- Übersichtskarten -->
   <section class="section">
     <div class="container">
