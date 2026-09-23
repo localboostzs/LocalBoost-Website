@@ -209,6 +209,35 @@ function initVisibilityCalculator() {
   });
 }
 
+/* Dezente Konfetti-Animation bei erfolgreichem Formular-Versand */
+function fireConfetti() {
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+  const colors = ["var(--color-blue)", "var(--color-blue-light)", "var(--color-blue-dark)", "var(--color-navy)"];
+  const burst = document.createElement("div");
+  burst.className = "confetti-burst";
+  burst.setAttribute("aria-hidden", "true");
+
+  const count = 60;
+  for (let i = 0; i < count; i++) {
+    const piece = document.createElement("span");
+    piece.className = "confetti-piece";
+    const size = 6 + Math.random() * 6;
+    piece.style.left = Math.random() * 100 + "vw";
+    piece.style.width = size + "px";
+    piece.style.height = size * 0.4 + "px";
+    piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+    piece.style.setProperty("--drift", (Math.random() - 0.5) * 220 + "px");
+    piece.style.setProperty("--rotate-end", 360 + Math.random() * 360 + "deg");
+    piece.style.animationDuration = 2 + Math.random() * 1 + "s";
+    piece.style.animationDelay = Math.random() * 0.3 + "s";
+    burst.appendChild(piece);
+  }
+
+  document.body.appendChild(burst);
+  setTimeout(() => burst.remove(), 3300);
+}
+
 /* Formspree AJAX handling: no redirect, inline success/error messaging */
 function initForms() {
   document.querySelectorAll("form[data-ajax-form]").forEach((form) => {
@@ -240,6 +269,7 @@ function initForms() {
           form.reset();
           if (successEl) successEl.style.display = "block";
           if (successEl) successEl.scrollIntoView({ behavior: "smooth", block: "center" });
+          fireConfetti();
         } else {
           if (errorEl) errorEl.style.display = "block";
         }
