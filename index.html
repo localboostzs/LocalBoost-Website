@@ -195,6 +195,67 @@
     </div>
   </section>
 
+  <!-- Sichtbarkeits-Rechner -->
+  <section class="section calc-section">
+    <div class="container">
+      <div class="section-head section-head--center reveal">
+        <h2>Wo stehst du aktuell bei Google?</h2>
+        <p>Wähle deine Branche und erhalte eine Einschätzung, wie viel Potenzial in deinem Google-Profil steckt.</p>
+      </div>
+
+      <div class="calc-card reveal">
+        <div class="calc-inputs">
+          <div class="form-group">
+            <label for="calcBranche">Deine Branche</label>
+            <select id="calcBranche">
+              <option value="" disabled selected>Branche wählen</option>
+              <option value="Coiffeur">Coiffeur</option>
+              <option value="Gastronomie">Gastronomie</option>
+              <option value="Detailhandel">Detailhandel</option>
+              <option value="Handwerk">Handwerk</option>
+              <option value="Dienstleistung">Dienstleistung</option>
+              <option value="Gesundheit">Gesundheit</option>
+              <option value="Beauty / Kosmetik">Beauty / Kosmetik</option>
+              <option value="Fitness">Fitness</option>
+              <option value="Immobilien">Immobilien</option>
+              <option value="Sonstiges">Sonstiges</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="calcBewertungen">Aktuelle Anzahl Google-Bewertungen <span class="calc-optional">(optional)</span></label>
+            <input type="number" id="calcBewertungen" min="0" placeholder="z. B. 8" />
+          </div>
+          <button type="button" class="btn btn-primary btn-block" id="calcSubmit">Sichtbarkeit schätzen</button>
+        </div>
+
+        <div class="calc-result" id="calcResult" hidden>
+          <div class="calc-bars">
+            <div class="calc-bar-group">
+              <div class="calc-bar-head">
+                <span class="calc-bar-label">Aktuell geschätzt</span>
+                <span class="calc-bar-value" id="calcValueBefore">–</span>
+              </div>
+              <div class="calc-bar-track">
+                <div class="calc-bar-fill calc-bar-fill--before" id="calcBarBefore"></div>
+              </div>
+            </div>
+            <div class="calc-bar-group">
+              <div class="calc-bar-head">
+                <span class="calc-bar-label">Potenzial mit vollständigem Profil</span>
+                <span class="calc-bar-value" id="calcValueAfter">–</span>
+              </div>
+              <div class="calc-bar-track">
+                <div class="calc-bar-fill calc-bar-fill--after" id="calcBarAfter"></div>
+              </div>
+            </div>
+          </div>
+          <p class="calc-explainer" id="calcExplainer"></p>
+          <p class="calc-disclaimer">Geschätzt basierend auf typischen Verbesserungen bei vollständigen, aktiv gepflegten Google-Profilen – keine Garantie für eine bestimmte Platzierung oder Bewertungszahl.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- Pakete-Teaser -->
   <section class="section section--wave-down">
     <div class="container">

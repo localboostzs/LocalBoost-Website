@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initFaq();
   initForms();
   initCompareSlider();
+  initVisibilityCalculator();
 });
 
 /* Mobile navigation toggle */
@@ -152,6 +153,60 @@ function initCompareSlider() {
 
   frame.addEventListener("pointerup", stopDragging);
   frame.addEventListener("pointercancel", stopDragging);
+}
+
+/* Sichtbarkeits-Rechner (Startseite) */
+function initVisibilityCalculator() {
+  const submitBtn = document.getElementById("calcSubmit");
+  const branchSelect = document.getElementById("calcBranche");
+  const reviewsInput = document.getElementById("calcBewertungen");
+  const result = document.getElementById("calcResult");
+  if (!submitBtn || !branchSelect || !reviewsInput || !result) return;
+
+  const barBefore = document.getElementById("calcBarBefore");
+  const barAfter = document.getElementById("calcBarAfter");
+  const valueBefore = document.getElementById("calcValueBefore");
+  const valueAfter = document.getElementById("calcValueAfter");
+  const explainer = document.getElementById("calcExplainer");
+
+  // Grobe, transparent kommunizierte Einschätzung anhand der Bewertungsanzahl.
+  // Keine echten Rankingdaten — dient nur der Veranschaulichung.
+  function estimate(reviewCount) {
+    if (reviewCount === null) return { current: 7, potentialLow: 2, potentialHigh: 3 };
+    if (reviewCount <= 3) return { current: 9, potentialLow: 3, potentialHigh: 4 };
+    if (reviewCount <= 10) return { current: 7, potentialLow: 2, potentialHigh: 3 };
+    if (reviewCount <= 25) return { current: 6, potentialLow: 2, potentialHigh: 3 };
+    if (reviewCount <= 50) return { current: 5, potentialLow: 1, potentialHigh: 2 };
+    return { current: 4, potentialLow: 1, potentialHigh: 2 };
+  }
+
+  function fillPercent(position) {
+    return Math.max(8, Math.min(100, ((11 - position) / 10) * 100));
+  }
+
+  submitBtn.addEventListener("click", () => {
+    const branche = branchSelect.value || "dein Unternehmen";
+    const rawReviews = reviewsInput.value.trim();
+    const reviewCount = rawReviews === "" ? null : Math.max(0, parseInt(rawReviews, 10) || 0);
+
+    const { current, potentialLow, potentialHigh } = estimate(reviewCount);
+    const potentialMid = (potentialLow + potentialHigh) / 2;
+
+    valueBefore.textContent = `Platz ${current} von 10`;
+    valueAfter.textContent = `Platz ${potentialLow}–${potentialHigh} von 10`;
+
+    result.style.setProperty("--calc-before", fillPercent(current) + "%");
+    result.style.setProperty("--calc-after", fillPercent(potentialMid) + "%");
+
+    explainer.textContent = `Für Betriebe wie ${branche} entscheidet ein vollständiges, aktiv gepflegtes Google-Profil oft darüber, ob potenzielle Kunden dich überhaupt finden. Mit vollständigen Angaben, aktuellen Fotos und mehr Bewertungen lässt sich die Sichtbarkeit häufig spürbar verbessern.`;
+
+    result.hidden = false;
+    result.classList.remove("is-animated");
+    // Reflow erzwingen, damit die Breiten-Transition bei jedem Klick neu startet.
+    void result.offsetWidth;
+    result.classList.add("is-animated");
+    result.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  });
 }
 
 /* Formspree AJAX handling: no redirect, inline success/error messaging */
