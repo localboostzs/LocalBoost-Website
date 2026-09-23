@@ -7,6 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initForms();
   initCompareSlider();
   initVisibilityCalculator();
+  initPackageToggle();
 });
 
 /* Mobile navigation toggle */
@@ -206,6 +207,32 @@ function initVisibilityCalculator() {
     void result.offsetWidth;
     result.classList.add("is-animated");
     result.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  });
+}
+
+/* Toggle-Paketvergleich (Pakete-Seite) */
+function initPackageToggle() {
+  const buttons = document.querySelectorAll("[data-pkg-toggle]");
+  const panels = document.querySelectorAll("[data-pkg-panel]");
+  if (!buttons.length || !panels.length) return;
+
+  buttons.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const target = btn.dataset.pkgToggle;
+      if (btn.classList.contains("is-active")) return;
+
+      buttons.forEach((b) => {
+        const active = b === btn;
+        b.classList.toggle("is-active", active);
+        b.setAttribute("aria-selected", String(active));
+      });
+
+      panels.forEach((panel) => {
+        const active = panel.dataset.pkgPanel === target;
+        panel.classList.toggle("is-active", active);
+        panel.setAttribute("aria-hidden", String(!active));
+      });
+    });
   });
 }
 
