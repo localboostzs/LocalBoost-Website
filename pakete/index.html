@@ -122,7 +122,7 @@
             <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>Bewertungssystem mit NFC-Karte und QR-Code</li>
             <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>Lokale Sichtbarkeit in Google und Maps</li>
           </ul>
-          <a href="#detail-google-boost" class="btn btn-secondary btn-block">Details</a>
+          <a href="#pkg-detail" class="btn btn-secondary btn-block" data-pkg-jump="google">Details</a>
         </div>
 
         <div class="pricing-card reveal" style="--reveal-index:1" id="web-boost">
@@ -136,7 +136,7 @@
             <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>Bewertungssystem mit NFC-Karte und QR-Code</li>
             <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>Laufender Betrieb und Wartung</li>
           </ul>
-          <a href="#detail-web-boost" class="btn btn-secondary btn-block">Details</a>
+          <a href="#pkg-detail" class="btn btn-secondary btn-block" data-pkg-jump="web">Details</a>
         </div>
 
         <div class="pricing-card pricing-card--featured reveal" style="--reveal-index:2" id="full-boost">
@@ -150,64 +150,69 @@
             <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>Automatisierung von Anfragen, Terminen und Nachfassen</li>
             <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>Laufende Betreuung und Auswertung</li>
           </ul>
-          <a href="#detail-full-boost" class="btn btn-primary btn-block">Details</a>
+          <a href="#pkg-detail" class="btn btn-primary btn-block" data-pkg-jump="full">Details</a>
         </div>
 
       </div>
     </div>
   </section>
 
-  <!-- Detail: Google Boost -->
-  <section class="section" id="detail-google-boost">
+  <!-- Paket-Details (Toggle) -->
+  <section class="section" id="pkg-detail">
     <div class="container">
-      <div class="detail-content-centered reveal">
-        <span class="eyebrow">Google Boost</span>
-        <h2>Der schnellste Weg zu mehr Anfragen aus der Region</h2>
-        <p>Wir übernehmen und optimieren Ihr Google-Unternehmensprofil und richten ein System ein, mit dem zufriedene Kunden per NFC oder QR-Code in Sekunden eine Bewertung abgeben.</p>
-        <ul class="pricing-features">
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>Google-Profil übernehmen und vollständig einrichten</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>Kategorien, Leistungen, Öffnungszeiten und Fotos optimieren</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>Bewertungssystem mit NFC-Karte und QR-Code</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>Lokale Sichtbarkeit in Google und Maps</li>
-        </ul>
-        <a href="/anfrage/" class="btn btn-primary">Kostenlose Anfrage</a>
+      <div class="pkg-pill reveal" role="tablist" aria-label="Paket wählen">
+        <span class="pkg-pill__indicator" aria-hidden="true" style="transform: translateX(100%);"></span>
+        <button type="button" class="pkg-pill__btn" data-pkg-pill="google" role="tab" aria-selected="false">Google Boost</button>
+        <button type="button" class="pkg-pill__btn is-active" data-pkg-pill="web" role="tab" aria-selected="true">Web Boost</button>
+        <button type="button" class="pkg-pill__btn" data-pkg-pill="full" role="tab" aria-selected="false">Full Boost</button>
       </div>
-    </div>
-  </section>
 
-  <!-- Detail: Web Boost -->
-  <section class="section" id="detail-web-boost">
-    <div class="container">
-      <div class="detail-content-centered reveal">
-        <span class="eyebrow">Web Boost</span>
-        <h2>Für Betriebe ohne eigene Website — oder mit einer, die keine Kunden bringt</h2>
-        <p>Sie erhalten eine moderne Website und ein optimiertes Google-Profil – die beiden Punkte, die bei einer Suche über Anfrage oder Absprung entscheiden.</p>
-        <ul class="pricing-features">
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>Website erstellen oder bestehende überarbeiten</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>Mobiloptimierung und Ladezeit</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>Google-Profil übernehmen und optimieren</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>Bewertungssystem mit NFC-Karte und QR-Code</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>Laufender Betrieb und Wartung</li>
-        </ul>
-        <a href="/anfrage/" class="btn btn-primary">Kostenlose Anfrage</a>
-      </div>
-    </div>
-  </section>
+      <div class="pkg-detail-wrap reveal">
+        <div class="pkg-detail-panel" data-pkg-detail="google" role="tabpanel" aria-hidden="true">
+          <div class="detail-content-centered">
+            <span class="eyebrow">Google Boost</span>
+            <h2>Der schnellste Weg zu mehr Anfragen aus der Region</h2>
+            <p>Wir übernehmen und optimieren Ihr Google-Unternehmensprofil und richten ein System ein, mit dem zufriedene Kunden per NFC oder QR-Code in Sekunden eine Bewertung abgeben.</p>
+            <ul class="pricing-features">
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>Google-Profil übernehmen und vollständig einrichten</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>Kategorien, Leistungen, Öffnungszeiten und Fotos optimieren</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>Bewertungssystem mit NFC-Karte und QR-Code</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>Lokale Sichtbarkeit in Google und Maps</li>
+            </ul>
+            <a href="/anfrage/" class="btn btn-primary">Kostenlose Anfrage</a>
+          </div>
+        </div>
 
-  <!-- Detail: Full Boost -->
-  <section class="section" id="detail-full-boost">
-    <div class="container">
-      <div class="detail-content-centered reveal">
-        <span class="eyebrow">Full Boost</span>
-        <h2>Die umfassende Lösung für mehr Sichtbarkeit und weniger Aufwand</h2>
-        <p>Für Betriebe, die online sichtbar sein und intern Zeit sparen wollen. Zusätzlich zur Website und Google-Präsenz bauen wir Ihre Social-Media-Kanäle auf und automatisieren wiederkehrende Abläufe.</p>
-        <ul class="pricing-features">
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>Alles aus dem Web Boost</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>Social Media aufbauen und betreuen</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>Automatisierung von Anfragen, Terminen und Nachfassen</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>Laufende Betreuung und Auswertung</li>
-        </ul>
-        <a href="/anfrage/" class="btn btn-primary">Kostenlose Anfrage</a>
+        <div class="pkg-detail-panel is-active" data-pkg-detail="web" role="tabpanel">
+          <div class="detail-content-centered">
+            <span class="eyebrow">Web Boost</span>
+            <h2>Für Betriebe ohne eigene Website — oder mit einer, die keine Kunden bringt</h2>
+            <p>Sie erhalten eine moderne Website und ein optimiertes Google-Profil – die beiden Punkte, die bei einer Suche über Anfrage oder Absprung entscheiden.</p>
+            <ul class="pricing-features">
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>Website erstellen oder bestehende überarbeiten</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>Mobiloptimierung und Ladezeit</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>Google-Profil übernehmen und optimieren</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>Bewertungssystem mit NFC-Karte und QR-Code</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>Laufender Betrieb und Wartung</li>
+            </ul>
+            <a href="/anfrage/" class="btn btn-primary">Kostenlose Anfrage</a>
+          </div>
+        </div>
+
+        <div class="pkg-detail-panel" data-pkg-detail="full" role="tabpanel" aria-hidden="true">
+          <div class="detail-content-centered">
+            <span class="eyebrow">Full Boost</span>
+            <h2>Die umfassende Lösung für mehr Sichtbarkeit und weniger Aufwand</h2>
+            <p>Für Betriebe, die online sichtbar sein und intern Zeit sparen wollen. Zusätzlich zur Website und Google-Präsenz bauen wir Ihre Social-Media-Kanäle auf und automatisieren wiederkehrende Abläufe.</p>
+            <ul class="pricing-features">
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>Alles aus dem Web Boost</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>Social Media aufbauen und betreuen</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>Automatisierung von Anfragen, Terminen und Nachfassen</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>Laufende Betreuung und Auswertung</li>
+            </ul>
+            <a href="/anfrage/" class="btn btn-primary">Kostenlose Anfrage</a>
+          </div>
+        </div>
       </div>
     </div>
   </section>

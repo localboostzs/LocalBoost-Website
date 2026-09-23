@@ -1119,6 +1119,83 @@ input, select, textarea {
 }
 
 /* ==========================================================================
+   Paket-Detail-Toggle (Sliding Pill)
+   ========================================================================== */
+
+.pkg-pill {
+  position: relative;
+  display: flex;
+  max-width: 560px;
+  margin: 0 auto var(--space-5);
+  padding: 4px;
+  border: 2px solid var(--color-text);
+  border-radius: var(--radius-pill);
+  background: var(--color-white);
+}
+
+.pkg-pill__indicator {
+  position: absolute;
+  top: 4px;
+  bottom: 4px;
+  left: 4px;
+  width: calc((100% - 8px) / 3);
+  border-radius: var(--radius-pill);
+  background: linear-gradient(135deg, var(--color-navy), var(--color-blue-light));
+  transition: transform 0.35s cubic-bezier(0.65, 0, 0.35, 1);
+  z-index: 0;
+}
+
+.pkg-pill__btn {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  padding: 0.75rem 1rem;
+  border: none;
+  background: transparent;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-ui);
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--color-text);
+  text-align: center;
+  transition: color 0.3s var(--ease);
+}
+
+.pkg-pill__btn.is-active {
+  color: var(--color-white);
+}
+
+.pkg-detail-wrap {
+  position: relative;
+  display: grid;
+}
+
+.pkg-detail-panel {
+  grid-area: 1 / 1;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(6px);
+  transition: opacity 0.35s var(--ease), transform 0.35s var(--ease);
+}
+
+.pkg-detail-panel.is-active {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+@media (max-width: 640px) {
+  .pkg-pill {
+    padding: 3px;
+  }
+
+  .pkg-pill__btn {
+    padding: 0.6rem 0.35rem;
+    font-size: 0.78rem;
+  }
+}
+
+/* ==========================================================================
    Bedarfs-Quiz
    ========================================================================== */
 

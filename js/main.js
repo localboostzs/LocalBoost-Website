@@ -8,6 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initCompareSlider();
   initVisibilityCalculator();
   initPackageQuiz();
+  initPackagePillToggle();
 });
 
 /* Mobile navigation toggle */
@@ -314,6 +315,58 @@ function initPackageQuiz() {
       showStep("1");
     });
   }
+}
+
+/* Paket-Detail-Toggle mit sliding Pill-Highlight (Pakete-Seite) */
+function initPackagePillToggle() {
+  const pill = document.querySelector(".pkg-pill");
+  if (!pill) return;
+
+  const indicator = pill.querySelector(".pkg-pill__indicator");
+  const buttons = pill.querySelectorAll("[data-pkg-pill]");
+  const panels = document.querySelectorAll("[data-pkg-detail]");
+  const order = ["google", "web", "full"];
+
+  function moveIndicator(index) {
+    indicator.style.transform = `translateX(${index * 100}%)`;
+  }
+
+  function selectPackage(pkgKey) {
+    const index = order.indexOf(pkgKey);
+    if (index === -1) return;
+
+    buttons.forEach((btn) => {
+      const active = btn.dataset.pkgPill === pkgKey;
+      btn.classList.toggle("is-active", active);
+      btn.setAttribute("aria-selected", String(active));
+    });
+
+    panels.forEach((panel) => {
+      const active = panel.dataset.pkgDetail === pkgKey;
+      panel.classList.toggle("is-active", active);
+      panel.setAttribute("aria-hidden", String(!active));
+    });
+
+    moveIndicator(index);
+  }
+
+  buttons.forEach((btn) => {
+    btn.addEventListener("click", () => selectPackage(btn.dataset.pkgPill));
+  });
+
+  // Initiale Position des Highlights auf den standardmässig aktiven Button setzen.
+  const initialBtn = pill.querySelector(".pkg-pill__btn.is-active") || buttons[0];
+  moveIndicator(order.indexOf(initialBtn.dataset.pkgPill));
+
+  // Verknüpfung mit den "Details"-Links auf den Paket-Karten oben:
+  // Toggle auf das passende Paket setzen und dorthin scrollen.
+  document.querySelectorAll("[data-pkg-jump]").forEach((link) => {
+    link.addEventListener("click", (e) => {
+      e.preventDefault();
+      selectPackage(link.dataset.pkgJump);
+      document.getElementById("pkg-detail").scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+  });
 }
 
 /* Dezente Konfetti-Animation bei erfolgreichem Formular-Versand */
