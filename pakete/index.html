@@ -162,10 +162,10 @@
   <section class="section" id="pkg-detail">
     <div class="container">
       <div class="pkg-pill reveal" role="tablist" aria-label="Paket wählen">
-        <span class="pkg-pill__indicator" aria-hidden="true" style="transform: translateX(100%);"></span>
+        <span class="pkg-pill__indicator" aria-hidden="true" style="transform: translateX(200%);"></span>
         <button type="button" class="pkg-pill__btn" data-pkg-pill="google" role="tab" aria-selected="false">Google Boost</button>
-        <button type="button" class="pkg-pill__btn is-active" data-pkg-pill="web" role="tab" aria-selected="true">Web Boost</button>
-        <button type="button" class="pkg-pill__btn" data-pkg-pill="full" role="tab" aria-selected="false">Full Boost</button>
+        <button type="button" class="pkg-pill__btn" data-pkg-pill="web" role="tab" aria-selected="false">Web Boost</button>
+        <button type="button" class="pkg-pill__btn is-active" data-pkg-pill="full" role="tab" aria-selected="true">Full Boost</button>
       </div>
 
       <div class="pkg-detail-wrap reveal">
@@ -184,7 +184,7 @@
           </div>
         </div>
 
-        <div class="pkg-detail-panel is-active" data-pkg-detail="web" role="tabpanel">
+        <div class="pkg-detail-panel" data-pkg-detail="web" role="tabpanel" aria-hidden="true">
           <div class="detail-content-centered">
             <span class="eyebrow">Web Boost</span>
             <h2>Für Betriebe ohne eigene Website — oder mit einer, die keine Kunden bringt</h2>
@@ -200,7 +200,7 @@
           </div>
         </div>
 
-        <div class="pkg-detail-panel" data-pkg-detail="full" role="tabpanel" aria-hidden="true">
+        <div class="pkg-detail-panel is-active" data-pkg-detail="full" role="tabpanel">
           <div class="detail-content-centered">
             <span class="eyebrow">Full Boost</span>
             <h2>Die umfassende Lösung für mehr Sichtbarkeit und weniger Aufwand</h2>
