@@ -226,10 +226,20 @@ function initPackageQuiz() {
 
   const answers = { website: null, reviews: null, goal: null };
 
+  // Preise nicht separat im Quiz pflegen, sondern direkt aus den
+  // Paket-Übersichtskarten lesen — so können Quiz und Übersicht bei
+  // künftigen Preisänderungen nicht auseinanderlaufen.
+  function priceFromCard(cardId) {
+    const priceEl = document.querySelector(`#${cardId} .pricing-price`);
+    if (!priceEl) return "";
+    const subEl = document.querySelector(`#${cardId} .pricing-price-sub`);
+    return subEl ? `${priceEl.textContent.trim()} ${subEl.textContent.trim()}` : priceEl.textContent.trim();
+  }
+
   const PACKAGES = {
-    google: { title: "Google Boost", price: "Ab CHF 490" },
-    web: { title: "Web Boost", price: "Auf Anfrage" },
-    full: { title: "Full Boost", price: "Auf Anfrage" },
+    google: { title: "Google Boost", price: priceFromCard("google-boost") },
+    web: { title: "Web Boost", price: priceFromCard("web-boost") },
+    full: { title: "Full Boost", price: priceFromCard("full-boost") },
   };
 
   function recommendPackage(website, reviews, goal) {
