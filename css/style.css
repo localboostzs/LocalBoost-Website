@@ -1525,6 +1525,27 @@ input, select, textarea {
   box-shadow: var(--shadow-md);
 }
 
+.testimonial-review--link {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+}
+
+@media (max-width: 600px) {
+  .testimonial-grid .testimonial-review,
+  .testimonial-grid .testimonial-cta {
+    padding: var(--space-3);
+  }
+
+  .testimonial-review__title {
+    font-size: 1.15rem;
+  }
+
+  .testimonial-review p {
+    font-size: 0.98rem;
+  }
+}
+
 .testimonial-review__head {
   display: flex;
   align-items: flex-start;
