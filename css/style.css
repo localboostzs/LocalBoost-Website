@@ -2935,3 +2935,38 @@ input, select, textarea {
     opacity: 0;
   }
 }
+
+/* WhatsApp-Kontakt & Profilcheck-CTA (sekundär) */
+.contact-whatsapp {
+  margin-bottom: var(--space-4);
+}
+
+.contact-whatsapp .btn {
+  gap: 0.6rem;
+}
+
+.btn-outline-light {
+  background: transparent;
+  color: var(--color-white);
+  border: 2px solid color-mix(in srgb, var(--color-white) 75%, transparent);
+}
+
+.btn-outline-light:hover {
+  background: color-mix(in srgb, var(--color-white) 14%, transparent);
+  color: var(--color-white);
+}
+
+.cta-whatsapp {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  margin-top: var(--space-3);
+}
+
+.btn-outline-light--sm {
+  gap: 0.5rem;
+  padding: 0.5rem 1.1rem;
+  font-size: 0.9rem;
+}
