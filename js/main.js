@@ -9,6 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initVisibilityCalculator();
   initPackageQuiz();
   initPackagePillToggle();
+  initTestimonialMarquee();
 });
 
 /* Mobile navigation toggle */
@@ -453,4 +454,59 @@ function initForms() {
       }
     });
   });
+}
+
+/* Referenz-Slider: Endloser Marquee (links -> rechts) ab 900px, sonst Wischen */
+function initTestimonialMarquee() {
+  var root = document.querySelector("[data-marquee]");
+  if (!root) return;
+  var track = root.querySelector(".testimonial-track");
+  var originals = Array.prototype.slice.call(track.children);
+  var SPEED = 35; // px pro Sekunde
+  var desktop = window.matchMedia("(min-width: 900px)");
+  var reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+  function clearClones() {
+    Array.prototype.slice.call(track.querySelectorAll("[data-clone]")).forEach(function (el) {
+      el.remove();
+    });
+  }
+
+  function build() {
+    clearClones();
+    root.classList.remove("is-marquee");
+    track.style.removeProperty("--marquee-w");
+    root.style.removeProperty("--marquee-dur");
+    if (!desktop.matches || reduced.matches) return;
+
+    root.classList.add("is-marquee");
+    var first = originals[0];
+    var last = originals[originals.length - 1];
+    var setWidth = last.offsetLeft + last.offsetWidth +
+      parseFloat(getComputedStyle(last).marginRight) - first.offsetLeft;
+    if (!setWidth) return;
+
+    var copies = Math.ceil(root.clientWidth / setWidth) + 1;
+    for (var i = 1; i < copies; i++) {
+      originals.forEach(function (card) {
+        var clone = card.cloneNode(true);
+        clone.setAttribute("data-clone", "");
+        clone.setAttribute("aria-hidden", "true");
+        if (clone.tagName === "A") clone.setAttribute("tabindex", "-1");
+        track.appendChild(clone);
+      });
+    }
+    track.style.setProperty("--marquee-w", setWidth + "px");
+    track.style.setProperty("--marquee-dur", (setWidth / SPEED).toFixed(2) + "s");
+  }
+
+  var timer;
+  window.addEventListener("resize", function () {
+    clearTimeout(timer);
+    timer = setTimeout(build, 150);
+  });
+  [desktop, reduced].forEach(function (mq) {
+    if (mq.addEventListener) mq.addEventListener("change", build);
+  });
+  build();
 }
