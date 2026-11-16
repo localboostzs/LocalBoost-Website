@@ -3074,3 +3074,12 @@ input, select, textarea {
   from { transform: translate3d(calc(-1 * var(--marquee-w, 0px)), 0, 0); }
   to { transform: translate3d(0, 0, 0); }
 }
+
+/* Initial hero content must be visible without waiting for JS/IntersectionObserver.
+   Keep scroll reveal animations for later sections. */
+.hero .reveal,
+.hero .reveal.is-visible {
+  opacity: 1;
+  transform: none;
+  transition: none;
+}
