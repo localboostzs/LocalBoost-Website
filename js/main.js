@@ -356,6 +356,8 @@ function initPackagePillToggle() {
       const active = panel.dataset.pkgDetail === pkgKey;
       panel.classList.toggle("is-active", active);
       panel.setAttribute("aria-hidden", String(!active));
+      // Versteckte Panels aus der Tab-Reihenfolge nehmen (Links/Buttons darin)
+      panel.toggleAttribute("inert", !active);
     });
 
     moveIndicator(index);
