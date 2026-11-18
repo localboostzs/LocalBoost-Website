@@ -1,6 +1,7 @@
 // LocalBoost Zentralschweiz — shared site behaviour
 
 document.addEventListener("DOMContentLoaded", () => {
+  initConversionTracking();
   initNav();
   initReveal();
   initFaq();
@@ -11,6 +12,141 @@ document.addEventListener("DOMContentLoaded", () => {
   initPackagePillToggle();
   initTestimonialMarquee();
 });
+
+
+/* Lightweight conversion attribution (no cookies, user IDs or query-string storage).
+   First-touch data is kept for the current tab only and sent with a Formspree lead.
+   Outbound click events are hooks; Zaraz delivery remains disabled until configured. */
+const LB_ATTRIBUTION_KEY = "localboost_lead_source_v1";
+
+function lbCleanToken(value) {
+  if (typeof value !== "string") return "";
+  const token = value.trim().toLowerCase();
+  return /^[a-z0-9][a-z0-9_-]{0,63}$/.test(token) ? token : "";
+}
+
+function lbCleanPath(value) {
+  if (typeof value !== "string") return "/";
+  const path = value.split("?")[0].split("#")[0];
+  return /^\/[a-zA-Z0-9/_-]{0,120}$/.test(path) ? path : "/";
+}
+
+function lbLeadAttribution() {
+  try {
+    const saved = JSON.parse(sessionStorage.getItem(LB_ATTRIBUTION_KEY) || "null");
+    if (saved && typeof saved === "object" &&
+        ["source", "medium", "channel", "campaign", "landing_path"].every(
+          (key) => typeof saved[key] === "string" && saved[key].length <= 125
+        )) return saved;
+  } catch (e) { /* Storage may be disabled. */ }
+
+  const params = new URLSearchParams(window.location.search);
+  let source = lbCleanToken(params.get("utm_source"));
+  let medium = lbCleanToken(params.get("utm_medium"));
+  const campaign = lbCleanToken(params.get("utm_campaign"));
+  let channel = "direct";
+
+  if (source || medium || campaign) {
+    source = source || "campaign";
+    medium = medium || "campaign";
+    channel = /^(cpc|ppc|paid|paid_social|display)$/.test(medium) ? "paid" :
+      /^(organic|seo)$/.test(medium) ? "organic" :
+      /^(social|organic_social)$/.test(medium) ? "social" :
+      medium === "email" ? "email" : "campaign";
+  } else {
+    let referrerHost = "";
+    try {
+      const referrer = new URL(document.referrer);
+      if (referrer.protocol === "https:" || referrer.protocol === "http:") {
+        referrerHost = referrer.hostname.toLowerCase();
+      }
+    } catch (e) { /* Direct visit or malformed referrer. */ }
+
+    if (referrerHost === "localboost-zs.ch" || referrerHost === "www.localboost-zs.ch" ||
+        referrerHost === window.location.hostname.toLowerCase()) {
+      referrerHost = "";
+    }
+    if (/(^|\.)google\.[a-z.]+$/.test(referrerHost)) {
+      source = "google"; medium = "organic"; channel = "organic";
+    } else if (/(^|\.)bing\.com$/.test(referrerHost)) {
+      source = "bing"; medium = "organic"; channel = "organic";
+    } else if (/(^|\.)duckduckgo\.com$/.test(referrerHost)) {
+      source = "duckduckgo"; medium = "organic"; channel = "organic";
+    } else if (/(^|\.)(instagram\.com|facebook\.com|tiktok\.com|linkedin\.com|x\.com)$/.test(referrerHost)) {
+      source = "social"; medium = "social"; channel = "social";
+    } else if (referrerHost) {
+      source = "referral"; medium = "referral"; channel = "referral";
+    } else {
+      source = "direct"; medium = "none";
+    }
+  }
+
+  const attribution = {
+    source, medium, channel, campaign,
+    landing_path: lbCleanPath(window.location.pathname)
+  };
+  try { sessionStorage.setItem(LB_ATTRIBUTION_KEY, JSON.stringify(attribution)); } catch (e) {}
+  return attribution;
+}
+
+function lbFormName() {
+  const path = lbCleanPath(window.location.pathname);
+  return path.split("/").filter(Boolean).pop() || "startseite";
+}
+
+function lbEnrichFormData(data) {
+  const attribution = lbLeadAttribution();
+  data.set("lb_source", attribution.source);
+  data.set("lb_medium", attribution.medium);
+  data.set("lb_channel", attribution.channel);
+  data.set("lb_campaign", attribution.campaign || "none");
+  data.set("lb_landing_path", attribution.landing_path);
+  data.set("lb_conversion_path", lbCleanPath(window.location.pathname));
+  data.set("lb_form", lbFormName());
+}
+
+/* The document event has no network side effect. Cloudflare Zaraz delivery is
+   opt-in only and must be configured/reviewed before enabling the flag. */
+function lbConversionEvent(type) {
+  const attribution = lbLeadAttribution();
+  const payload = {
+    type: type,
+    form: lbFormName(),
+    source: attribution.source,
+    medium: attribution.medium,
+    channel: attribution.channel,
+    campaign: attribution.campaign || "none",
+    page: lbCleanPath(window.location.pathname)
+  };
+  try {
+    document.dispatchEvent(new CustomEvent("localboost:conversion", { detail: payload }));
+  } catch (e) {}
+  if (window.LOCALBOOST_ZARAZ_CONVERSIONS === true &&
+      window.zaraz && typeof window.zaraz.track === "function") {
+    try {
+      const result = window.zaraz.track("localboost_" + type, payload);
+      if (result && typeof result.catch === "function") result.catch(() => {});
+    } catch (e) {}
+  }
+}
+
+function initConversionTracking() {
+  lbLeadAttribution();
+  document.addEventListener("click", (event) => {
+    const target = event.target;
+    const anchor = target && typeof target.closest === "function" ?
+      target.closest("a[href]") : null;
+    if (!anchor) return;
+    const href = anchor.getAttribute("href") || "";
+    if (/^https:\/\/wa\.me\/[0-9]+(?:[/?#]|$)/i.test(href)) {
+      lbConversionEvent("whatsapp_click");
+    } else if (/^mailto:/i.test(href)) {
+      lbConversionEvent("email_click");
+    } else if (/^tel:/i.test(href)) {
+      lbConversionEvent("phone_click");
+    }
+  }, true);
+}
 
 /* Mobile navigation toggle */
 function initNav() {
@@ -432,13 +568,16 @@ function initForms() {
       }
 
       try {
+        const submissionData = new FormData(form);
+        lbEnrichFormData(submissionData);
         const response = await fetch(form.action, {
           method: "POST",
-          body: new FormData(form),
+          body: submissionData,
           headers: { Accept: "application/json" },
         });
 
         if (response.ok) {
+          lbConversionEvent("form_success");
           form.reset();
           if (successEl) successEl.style.display = "block";
           if (successEl) successEl.scrollIntoView({ behavior: "smooth", block: "center" });
