@@ -58,6 +58,14 @@ End-to-End in einem **lokalen** Browser, mit `fetch`-Stub für Formspree:
 5. WhatsApp-/Mailto-Klick: DOM-Ereignis einmal auslösen, **keine** Unterbrechung der externen Navigation.
 6. Responsive Layout, Navbar, Formular-Validierung, Konfetti und PageSpeed unverändert.
 
+## Datenschutz – vor der Produktivfreigabe prüfen (18.11.2026)
+
+- **Formspree-Serverstandort:** Laut [Formspree Security](https://formspree.io/security/) werden die Dienste auf AWS in **den USA** betrieben; Formspree gibt an, als Datenbearbeiter auf Standardvertragsklauseln (SCC) zurückzugreifen.
+- **Schweizer Informationspflicht:** Die [EDÖB-Informationspflicht](https://www.edoeb.admin.ch/de/informationspflicht) verlangt Angaben über Empfänger, Empfängerstaat und gegebenenfalls Datenschutzgarantien. In `datenschutz/index.html` sind Formspree, USA, der Anbieterhinweis zu SCC sowie Cloudflare jetzt ausdrücklich erwähnt.
+- **Noch zu prüfen:** Ob Formsprees AGB/Datenschutzvertrag und SCCs für den konkreten LocalBoost-Account anwendbar sind und wie etwaige weitere Auslandsbearbeitungen technisch und rechtlich abgesichert sind. Keine pauschale DSG-Konformität behaupten.
+- **Test- und Doku-Dateien:** `docs/` und `tests/` liegen in einem öffentlichen GitHub-Repository und können über GitHub und möglicherweise GitHub Pages gelesen werden. Sie enthalten keine geheimen Schlüssel; bei künftigen Änderungen darauf achten.
+- **Auswertung:** Lead-Herkunft ist browserseitig und kann durch Adblocker, Referrer-Policy oder falsche UTM-Tags fehlen bzw. von Nutzern manipuliert werden. Sie ist eine Näherung und kein revisionssicherer Herkunftsnachweis.
+
 ## Nach der Veröffentlichung
 
 - In Formspree prüfen, ob neue, **echte** Anfragen die Felder `lb_*` enthalten. Es werden keine alten Leads rückwirkend ergänzt.
